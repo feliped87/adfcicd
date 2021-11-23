@@ -1,0 +1,33 @@
+{
+	"name": "AzureBlob2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage3",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"YearDS": {
+				"type": "string"
+			},
+			"MonthDS": {
+				"type": "string"
+			},
+			"DayDS": {
+				"type": "string"
+			},
+			"HourDS": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"typeProperties": {
+			"fileName": {
+				"value": "@concat(dataset().YearDS,'/',dataset().YearDS,'-',dataset().MonthDS,'/pageviews-',dataset().YearDS,dataset().MonthDS,dataset().DayDS,if(less(int(dataset().HourDS),10),'-0','-'),dataset().HourDS,'0000.gz')",
+				"type": "Expression"
+			},
+			"folderPath": "wikipedia"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

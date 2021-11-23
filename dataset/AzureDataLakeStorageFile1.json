@@ -1,0 +1,33 @@
+{
+	"name": "AzureDataLakeStorageFile1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"YearDS": {
+				"type": "string"
+			},
+			"MonthDS": {
+				"type": "string"
+			},
+			"DayDS": {
+				"type": "string"
+			},
+			"HourDS": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureBlobFSFile",
+		"typeProperties": {
+			"fileName": {
+				"value": "@concat('pageviews-',dataset().YearDS,dataset().MonthDS,dataset().DayDS,if(less(int(dataset().HourDS),10),'-0','-'),dataset().HourDS,'0000.gz')",
+				"type": "Expression"
+			},
+			"folderPath": "wikipedia/demo_datasets"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

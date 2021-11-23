@@ -1,0 +1,236 @@
+{
+	"name": "pipeline3",
+	"properties": {
+		"activities": [
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@activity('Get Metadata2').output.Exists",
+						"type": "Expression"
+					},
+					"ifTrueActivities": [
+						{
+							"name": "Delete2",
+							"type": "Delete",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "AzureDataLakeStorageFile2",
+									"type": "DatasetReference"
+								},
+								"enableLogging": false,
+								"recursive": true,
+								"maxConcurrentConnections": 1
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Log Files Download",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "If Condition1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.Hours",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy Data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "HttpSource",
+									"httpRequestTimeout": "00:01:40"
+								},
+								"sink": {
+									"type": "AzureBlobFSSink"
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "Wikipedia_LS",
+									"type": "DatasetReference",
+									"parameters": {
+										"YearDS": {
+											"value": "@pipeline().parameters.Year",
+											"type": "Expression"
+										},
+										"MonthDS": {
+											"value": "@pipeline().parameters.Month",
+											"type": "Expression"
+										},
+										"DayDS": {
+											"value": "@pipeline().parameters.Day",
+											"type": "Expression"
+										},
+										"HourDS": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "AzureDataLakeStorageFile1",
+									"type": "DatasetReference",
+									"parameters": {
+										"YearDS": {
+											"value": "@pipeline().parameters.Year",
+											"type": "Expression"
+										},
+										"MonthDS": {
+											"value": "@pipeline().parameters.Month",
+											"type": "Expression"
+										},
+										"DayDS": {
+											"value": "@pipeline().parameters.Day",
+											"type": "Expression"
+										},
+										"HourDS": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "Process and Create Files",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Log Files Download",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/feliped@microsoft.com/WikipediaADF_ADLSGen2 Generic (1)",
+					"baseParameters": {
+						"yearWiki": {
+							"value": "@pipeline().parameters.Year",
+							"type": "Expression"
+						},
+						"monthWiki": {
+							"value": "@pipeline().parameters.Month",
+							"type": "Expression"
+						},
+						"dayWiki": {
+							"value": "@pipeline().parameters.Day",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks1",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Get Metadata2",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "AzureDataLakeStorageFile1",
+						"type": "DatasetReference",
+						"parameters": {
+							"YearDS": "2019",
+							"MonthDS": "02",
+							"DayDS": "19",
+							"HourDS": "10"
+						}
+					},
+					"fieldList": [
+						"exists"
+					]
+				}
+			}
+		],
+		"parameters": {
+			"Year": {
+				"type": "string",
+				"defaultValue": "2019"
+			},
+			"Month": {
+				"type": "string",
+				"defaultValue": "02"
+			},
+			"Day": {
+				"type": "string",
+				"defaultValue": "19"
+			},
+			"Hours": {
+				"type": "array",
+				"defaultValue": [
+					10,
+					11,
+					12
+				]
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-09-03T12:27:59Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

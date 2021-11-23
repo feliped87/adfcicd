@@ -1,0 +1,29 @@
+{
+	"name": "AzureBlob3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage3",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"YearDS": {
+				"type": "string"
+			},
+			"MonthDS": {
+				"type": "string"
+			},
+			"DayDS": {
+				"type": "string"
+			},
+			"HourDS": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"typeProperties": {
+			"folderPath": "wikipedia/demo_datasets"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

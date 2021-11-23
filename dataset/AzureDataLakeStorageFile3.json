@@ -1,0 +1,19 @@
+{
+	"name": "AzureDataLakeStorageFile3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureBlobFSFile",
+		"typeProperties": {
+			"format": {
+				"type": "ParquetFormat"
+			},
+			"fileName": "teste4.parquet",
+			"folderPath": "wikipedia"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,37 @@
+{
+	"name": "Wikipedia_LS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "HttpServer1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"YearDS": {
+				"type": "string",
+				"defaultValue": "2019"
+			},
+			"MonthDS": {
+				"type": "string",
+				"defaultValue": "02"
+			},
+			"DayDS": {
+				"type": "string",
+				"defaultValue": "19"
+			},
+			"HourDS": {
+				"type": "string",
+				"defaultValue": "10"
+			}
+		},
+		"annotations": [],
+		"type": "HttpFile",
+		"typeProperties": {
+			"relativeUrl": {
+				"value": "@concat(dataset().YearDS,'/',dataset().YearDS,'-',dataset().MonthDS,'/pageviews-',dataset().YearDS,dataset().MonthDS,dataset().DayDS,if(less(int(dataset().HourDS),10),'-0','-'),dataset().HourDS,'0000.gz')",
+				"type": "Expression"
+			},
+			"requestMethod": "GET"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

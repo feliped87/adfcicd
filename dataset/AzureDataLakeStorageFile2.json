@@ -1,0 +1,15 @@
+{
+	"name": "AzureDataLakeStorageFile2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureBlobFSFile",
+		"typeProperties": {
+			"folderPath": "wikipedia/demo_datasets"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
