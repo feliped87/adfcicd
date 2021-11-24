@@ -1,0 +1,265 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adfdbffa"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"AzureBlobStorage3_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage3'"
+		},
+		"AzureBlobStorage4_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage4'"
+		},
+		"AzureBlobStorage5_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage5'"
+		},
+		"AzureBlobStorage6_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage6'"
+		},
+		"AzureBlobStorage7_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage7'"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
+		"AzureDatabricks1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks1'"
+		},
+		"AzureMariaDB1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureMariaDB1'"
+		},
+		"AzureMariaDB2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureMariaDB2'"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		},
+		"linkedService2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'linkedService2'"
+		},
+		"AzureBlob1_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"AzureBlob1_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "csv/teste"
+		},
+		"AzureBlob2_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat(dataset().YearDS,'/',dataset().YearDS,'-',dataset().MonthDS,'/pageviews-',dataset().YearDS,dataset().MonthDS,dataset().DayDS,if(less(int(dataset().HourDS),10),'-0','-'),dataset().HourDS,'0000.gz')"
+		},
+		"AzureBlob2_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "wikipedia"
+		},
+		"AzureBlob3_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "wikipedia/demo_datasets"
+		},
+		"AzureBlob4_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "testando.csv"
+		},
+		"AzureBlob4_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "@concat('wikipedia/', string(item()))"
+		},
+		"AzureDataLakeStorageFile1_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat('pageviews-',dataset().YearDS,dataset().MonthDS,dataset().DayDS,if(less(int(dataset().HourDS),10),'-0','-'),dataset().HourDS,'0000.gz')"
+		},
+		"AzureDataLakeStorageFile1_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "wikipedia/demo_datasets"
+		},
+		"AzureDataLakeStorageFile2_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "wikipedia/demo_datasets"
+		},
+		"AzureDataLakeStorageFile3_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "teste4.parquet"
+		},
+		"AzureDataLakeStorageFile3_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "wikipedia"
+		},
+		"AzureDataLakeStorageFile4_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "teste2.7z"
+		},
+		"AzureDataLakeStorageFile4_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "wikipedia"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adfdbffa.dfs.core.windows.net"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://adfdbffa.vault.azure.net/"
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://dumps.wikimedia.org/other/pageviews/"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adfdbffa_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorage1_connectionString": {
+						"value": "[parameters('AzureBlobStorage1_connectionString')]"
+					},
+					"AzureBlobStorage3_connectionString": {
+						"value": "[parameters('AzureBlobStorage3_connectionString')]"
+					},
+					"AzureBlobStorage4_connectionString": {
+						"value": "[parameters('AzureBlobStorage4_connectionString')]"
+					},
+					"AzureBlobStorage5_connectionString": {
+						"value": "[parameters('AzureBlobStorage5_connectionString')]"
+					},
+					"AzureBlobStorage6_connectionString": {
+						"value": "[parameters('AzureBlobStorage6_connectionString')]"
+					},
+					"AzureBlobStorage7_connectionString": {
+						"value": "[parameters('AzureBlobStorage7_connectionString')]"
+					},
+					"AzureDataLakeStorage1_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					},
+					"AzureDatabricks1_accessToken": {
+						"value": "[parameters('AzureDatabricks1_accessToken')]"
+					},
+					"AzureMariaDB1_connectionString": {
+						"value": "[parameters('AzureMariaDB1_connectionString')]"
+					},
+					"AzureMariaDB2_connectionString": {
+						"value": "[parameters('AzureMariaDB2_connectionString')]"
+					},
+					"AzureSqlDatabase1_connectionString": {
+						"value": "[parameters('AzureSqlDatabase1_connectionString')]"
+					},
+					"linkedService2_connectionString": {
+						"value": "[parameters('linkedService2_connectionString')]"
+					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"AzureKeyVault1_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
+					"HttpServer1_properties_typeProperties_url": {
+						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
+					},
+					"AzureBlob1_properties_typeProperties_fileName": {
+						"value": "[parameters('AzureBlob1_properties_typeProperties_fileName')]"
+					},
+					"AzureBlob1_properties_typeProperties_folderPath": {
+						"value": "[parameters('AzureBlob1_properties_typeProperties_folderPath')]"
+					},
+					"AzureBlob2_properties_typeProperties_fileName": {
+						"value": "[parameters('AzureBlob2_properties_typeProperties_fileName')]"
+					},
+					"AzureBlob2_properties_typeProperties_folderPath": {
+						"value": "[parameters('AzureBlob2_properties_typeProperties_folderPath')]"
+					},
+					"AzureBlob3_properties_typeProperties_folderPath": {
+						"value": "[parameters('AzureBlob3_properties_typeProperties_folderPath')]"
+					},
+					"AzureBlob4_properties_typeProperties_fileName": {
+						"value": "[parameters('AzureBlob4_properties_typeProperties_fileName')]"
+					},
+					"AzureBlob4_properties_typeProperties_folderPath": {
+						"value": "[parameters('AzureBlob4_properties_typeProperties_folderPath')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "adfdbffa_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureDataLakeStorageFile1_properties_typeProperties_fileName": {
+						"value": "[parameters('AzureDataLakeStorageFile1_properties_typeProperties_fileName')]"
+					},
+					"AzureDataLakeStorageFile1_properties_typeProperties_folderPath": {
+						"value": "[parameters('AzureDataLakeStorageFile1_properties_typeProperties_folderPath')]"
+					},
+					"AzureDataLakeStorageFile2_properties_typeProperties_folderPath": {
+						"value": "[parameters('AzureDataLakeStorageFile2_properties_typeProperties_folderPath')]"
+					},
+					"AzureDataLakeStorageFile3_properties_typeProperties_fileName": {
+						"value": "[parameters('AzureDataLakeStorageFile3_properties_typeProperties_fileName')]"
+					},
+					"AzureDataLakeStorageFile3_properties_typeProperties_folderPath": {
+						"value": "[parameters('AzureDataLakeStorageFile3_properties_typeProperties_folderPath')]"
+					},
+					"AzureDataLakeStorageFile4_properties_typeProperties_fileName": {
+						"value": "[parameters('AzureDataLakeStorageFile4_properties_typeProperties_fileName')]"
+					},
+					"AzureDataLakeStorageFile4_properties_typeProperties_folderPath": {
+						"value": "[parameters('AzureDataLakeStorageFile4_properties_typeProperties_folderPath')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adfdbffa_ArmTemplate_0')]"
+			]
+		}
+	]
+}

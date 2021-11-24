@@ -1,0 +1,96 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adfdbffa"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage3_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage4_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage5_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage6_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage7_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"AzureDatabricks1_accessToken": {
+			"value": ""
+		},
+		"AzureMariaDB1_connectionString": {
+			"value": ""
+		},
+		"AzureMariaDB2_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"linkedService2_connectionString": {
+			"value": ""
+		},
+		"AzureBlob1_properties_typeProperties_fileName": {
+			"value": ""
+		},
+		"AzureBlob1_properties_typeProperties_folderPath": {
+			"value": "csv/teste"
+		},
+		"AzureBlob2_properties_typeProperties_fileName": {
+			"value": "@concat(dataset().YearDS,'/',dataset().YearDS,'-',dataset().MonthDS,'/pageviews-',dataset().YearDS,dataset().MonthDS,dataset().DayDS,if(less(int(dataset().HourDS),10),'-0','-'),dataset().HourDS,'0000.gz')"
+		},
+		"AzureBlob2_properties_typeProperties_folderPath": {
+			"value": "wikipedia"
+		},
+		"AzureBlob3_properties_typeProperties_folderPath": {
+			"value": "wikipedia/demo_datasets"
+		},
+		"AzureBlob4_properties_typeProperties_fileName": {
+			"value": "testando.csv"
+		},
+		"AzureBlob4_properties_typeProperties_folderPath": {
+			"value": "@concat('wikipedia/', string(item()))"
+		},
+		"AzureDataLakeStorageFile1_properties_typeProperties_fileName": {
+			"value": "@concat('pageviews-',dataset().YearDS,dataset().MonthDS,dataset().DayDS,if(less(int(dataset().HourDS),10),'-0','-'),dataset().HourDS,'0000.gz')"
+		},
+		"AzureDataLakeStorageFile1_properties_typeProperties_folderPath": {
+			"value": "wikipedia/demo_datasets"
+		},
+		"AzureDataLakeStorageFile2_properties_typeProperties_folderPath": {
+			"value": "wikipedia/demo_datasets"
+		},
+		"AzureDataLakeStorageFile3_properties_typeProperties_fileName": {
+			"value": "teste4.parquet"
+		},
+		"AzureDataLakeStorageFile3_properties_typeProperties_folderPath": {
+			"value": "wikipedia"
+		},
+		"AzureDataLakeStorageFile4_properties_typeProperties_fileName": {
+			"value": "teste2.7z"
+		},
+		"AzureDataLakeStorageFile4_properties_typeProperties_folderPath": {
+			"value": "wikipedia"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://adfdbffa.dfs.core.windows.net"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://adfdbffa.vault.azure.net/"
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"value": "https://dumps.wikimedia.org/other/pageviews/"
+		}
+	}
+}
